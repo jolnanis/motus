@@ -1,4 +1,4 @@
-from motus.dic.WordSet import NonAplhaWordWarning, SubFileException, WordSet
+from motus.dic.wordset import NonAplhaWordWarning, SubFileException, WordSet
 import os
 import tempfile
 import unittest
