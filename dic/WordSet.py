@@ -15,10 +15,10 @@ class WordSet:
 
     Words are cleaned automatically upon addition to the set.
     """
-    _content = set()
-    _substitutions = {}
 
     def __init__(self, import_file=None, substitution_file=None):
+        self._content = set()
+        self._substitutions = {}
         if substitution_file is not None:
             self.read_substitutions(substitution_file)
         if import_file is not None:
