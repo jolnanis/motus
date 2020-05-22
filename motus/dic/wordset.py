@@ -60,7 +60,7 @@ class WordSet:
         for line in open(path, 'r'):
             self.add(line)
 
-    def write(self, path):
+    def write_list(self, path):
         word_list = sorted(self._content)
         file = open(path, 'w')
         for word in word_list:

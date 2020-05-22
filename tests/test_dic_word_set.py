@@ -108,10 +108,13 @@ class DicWordSetTest(unittest.TestCase):
             self.assertEqual(warnings[0].category, NonAplhaWordWarning)
 
 
+WRITE_DATA = {'SET', 'IN', 'NO', 'PARTICULAR', 'ORDER'}
+
+
 class TestWordSetWrite(unittest.TestCase):
     def setUp(self):
         self.w = WordSet()
-        self.w._content = {'SET', 'IN', 'NO', 'PARTICULAR', 'ORDER'}
+        self.w._content = WRITE_DATA
 
         tmp_handler, tmp_path = tempfile.mkstemp()
         self.tmp_handler = tmp_handler
@@ -125,8 +128,8 @@ class TestWordSetWrite(unittest.TestCase):
 
 
 class TestWordSetWriteList(TestWordSetWrite):
-    def test_write(self):
-        self.w.write(self.tmp_path)
+    def test_write_list(self):
+        self.w.write_list(self.tmp_path)
         self.assertListEqual(
             self.tmp_file.readlines(),
             ['IN\n', 'NO\n', 'ORDER\n',
