@@ -1,5 +1,5 @@
-from dic.WordSet import WordSet
-from dic.WordSet import SubFileException
+from motus.dic.WordSet import WordSet
+from motus.dic.WordSet import SubFileException
 import os
 import unittest
 
