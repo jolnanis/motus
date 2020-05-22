@@ -1,7 +1,7 @@
 # Non-standard
 
 _morphalou/
-
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
