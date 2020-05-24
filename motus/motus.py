@@ -24,7 +24,7 @@ class Game(ABC):
             data = pkgutil.get_data('motus.dic',filename)
             self.dico = yaml.safe_load(data.decode())
         except FileNotFoundError:
-            pass
+            raise
  
     @abstractmethod
     def play(self):
