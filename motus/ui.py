@@ -28,7 +28,7 @@ class UI:
         cls.wordlength = wordlength
 
     @classmethod
-    def first_word(cls, first_letter):
+    def display_first_word(cls, first_letter):
         fill = cls.wordlength - 1
         output = f' {first_letter} ' + ' - ' * fill
         print(output)
@@ -44,7 +44,7 @@ class UI:
         print(f'Congratulations, {solution} was the right answer !')
 
     @classmethod
-    def correction(cls, guess, correction):
+    def display_correction(cls, guess, correction):
         adjusted_guess = guess.ljust(cls.wordlength, '-')[:cls.wordlength]
         
         for letter, hint in zip(adjusted_guess, correction):

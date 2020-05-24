@@ -111,13 +111,13 @@ class SoloRound(Round):
         self.game.incr_rounds()
 
         UI.init_round(self.wordlength)
-        UI.first_word(self.solution[0])
+        UI.display_first_word(self.solution[0])
 
         for i in range(DEFAULT_GUESSES):
             guess = UI.prompt_guess()
 
             res, correction = self.evaluate(guess)
-            UI.correction(guess, correction)
+            UI.display_correction(guess, correction)
             
             if res:
                 self.game.incr_wins()
