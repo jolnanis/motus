@@ -9,10 +9,12 @@ class UI:
     def select_wordlength(cls, minlength, maxlength):
         while True:
             wordlength = input("Select a word length: ")
+
             if (wordlength.isnumeric() and int(wordlength) > minlength - 1 
                                     and int(wordlength) < maxlength + 1):
                 return int(wordlength)
                 continue
+
             else:
                 print(f'Please select a valid  number in range ({minlength}-{maxlength})')
 
@@ -47,7 +49,6 @@ class UI:
         
         for letter, hint in zip(adjusted_guess, correction):
             cls._display_letter(letter, hint)
-
         print()
 
     @classmethod
@@ -63,9 +64,9 @@ class UI:
 
     @classmethod
     def display_solution(cls, solution):
-        """ Called when the player has exceeded their number of guesses. 
-        
+        """ Called when the player has exceeded their number of guesses. \n
         Displays the solution along with a kind word."""
+        
         print(f'Sorry: the right answer was: {solution}')
 
     @classmethod

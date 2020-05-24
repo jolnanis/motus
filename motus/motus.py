@@ -30,6 +30,7 @@ class Game(ABC):
     def play(self):
         pass
 
+
 class SoloGame(Game):
     def __init__(self, dico_filename):
         self.wins = 0
@@ -51,8 +52,6 @@ class SoloGame(Game):
             rd.play()
             UI.display_score_solo(self.wins, self.rounds)
             replay = UI.ask_replay()
-
-
 
 
 class Round(ABC):
