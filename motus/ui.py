@@ -67,7 +67,7 @@ class UI:
         """ Called when the player has exceeded their number of guesses. \n
         Displays the solution along with a kind word."""
         
-        print(f'Sorry: the right answer was: {solution}')
+        print(f'Sorry, the right answer was: {solution}')
 
     @classmethod
     def display_score_solo(cls, wins, rounds):
