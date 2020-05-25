@@ -1,4 +1,4 @@
-# motus
+# motus![Tests](https://github.com/nsirletti/motus/workflows/Tests/badge.svg)
 Motus was a french TV game show based on american TV show Lingo.
 
 ## Motivation
