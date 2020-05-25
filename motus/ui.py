@@ -10,18 +10,20 @@ class UI:
         while True:
             wordlength = input("Select a word length: ")
 
-            if (wordlength.isnumeric() and int(wordlength) > minlength - 1 
-                                    and int(wordlength) < maxlength + 1):
+            if (wordlength.isnumeric() and int(wordlength) > minlength - 1
+                    and int(wordlength) < maxlength + 1):
+
                 return int(wordlength)
                 continue
 
             else:
-                print(f'Please select a valid  number in range ({minlength}-{maxlength})')
+                print(f'Please select a valid  number '
+                      f'in range ({minlength}-{maxlength})')
 
     @classmethod
     def ask_replay(cls):
         answer = input("Replay ? (y/N) ")
-        return answer.upper() in ['Y','YES']
+        return answer.upper() in ['Y', 'YES']
 
     @classmethod
     def init_round(cls, wordlength):
@@ -46,7 +48,7 @@ class UI:
     @classmethod
     def display_correction(cls, guess, correction):
         adjusted_guess = guess.ljust(cls.wordlength, '-')[:cls.wordlength]
-        
+
         for letter, hint in zip(adjusted_guess, correction):
             cls._display_letter(letter, hint)
         print()
@@ -60,16 +62,15 @@ class UI:
         elif hint == 'W':
             print(f' {letter} ', end='')
         else:
-            raise TypeError 
+            raise TypeError
 
     @classmethod
     def display_solution(cls, solution):
         """ Called when the player has exceeded their number of guesses. \n
         Displays the solution along with a kind word."""
-        
+
         print(f'Sorry, the right answer was: {solution}')
 
     @classmethod
     def display_score_solo(cls, wins, rounds):
         print(f'You have {wins} wins over {rounds} rounds.')
-    

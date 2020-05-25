@@ -4,7 +4,6 @@ import pkgutil
 import random
 import yaml
 
-import motus.dic
 from motus.ui import UI
 
 
@@ -17,15 +16,15 @@ class Game(ABC):
     def __init__(self, dico_filename):
         self.load_dico(dico_filename)
         super().__init__()
-    
+
     def load_dico(self, filename):
         """Returns the content of a dictionary given its filename"""
         try:
-            data = pkgutil.get_data('motus.dic',filename)
+            data = pkgutil.get_data('motus.dic', filename)
             self.dico = yaml.safe_load(data.decode())
         except FileNotFoundError:
             raise
- 
+
     @abstractmethod
     def play(self):
         pass
@@ -36,10 +35,10 @@ class SoloGame(Game):
         self.wins = 0
         self.rounds = 0
         super().__init__(dico_filename)
-    
+
     def incr_wins(self):
         self.wins = self.wins+1
-        
+
     def incr_rounds(self):
         self.rounds = self.rounds+1
 
@@ -60,7 +59,7 @@ class Round(ABC):
         self.wordlength = wordlength
         self.pick_solution()
         super().__init__()
-        
+
     @abstractmethod
     def play(self):
         pass
@@ -73,10 +72,10 @@ class Round(ABC):
 
     def evaluate(self, guess):
         """ Returns a tuple of a boolean and a correction string.
-        
-        The boolean is `True` if the guessed word is the solution 
 
-        The correction string is the same length as the solution and contains : \n
+        The boolean is `True` if the guessed word is the solution
+
+        The correction string is the same length as the solution and contains:\n
         `R` Right : Good letter in the good place.\n
         `M` Misplaced : Good letter in a bad place.\n
         `W` Wrong : Letter used too many times"""
@@ -102,8 +101,8 @@ class Round(ABC):
 
             else:
                 correction = correction + 'W'
-                
-        return False, correction                
+
+        return False, correction
 
 
 class SoloRound(Round):
@@ -118,13 +117,13 @@ class SoloRound(Round):
 
             res, correction = self.evaluate(guess)
             UI.display_correction(guess, correction)
-            
+
             if res:
                 self.game.incr_wins()
                 UI.right_guess(self.solution)
                 break
 
-        if not res: 
+        if not res:
             UI.display_solution(self.solution)
 
 
@@ -132,6 +131,7 @@ def main():
     game = SoloGame('wordlist_fr.yml')
     game.play()
 
+
 if __name__ == "__main__":
-    
-    main() 
+
+    main()
