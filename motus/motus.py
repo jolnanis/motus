@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from collections import Counter
 import pkgutil
 import random
+
 import yaml
 
 from motus.ui import UI
