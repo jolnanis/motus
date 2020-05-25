@@ -13,7 +13,7 @@ The package is not PyPl uploaded on PyPl.
 **To play**
 `python3 -m motus`
 
-[![Tests][test_svg]] [test_link] [![Coverage][coverage_svg]] [coverage_link]
+[![Tests][test_svg]][test_link] [![Coverage][coverage_svg]][coverage_link]
 
 [test_svg]: https://github.com/nsirletti/motus/workflows/Tests/badge.svg?branch=master
 [test_link]: https://github.com/nsirletti/motus/actions?query=workflow%3ATests
