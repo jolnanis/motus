@@ -5,6 +5,7 @@ import random
 
 import yaml
 
+from  motus import dictools
 from motus.ui import UI
 
 
@@ -14,17 +15,15 @@ DEFAULT_GUESSES = 12
 
 
 class Game(ABC):
-    def __init__(self, dico_filename):
-        self.load_dico(dico_filename)
+    def __init__(self, filename, filetype, pckg):
+        self.load_dic(filename, filetype, pckg)
         super().__init__()
 
-    def load_dico(self, filename):
+    def load_dic(self, filename, filetype, pckg):
         """Returns the content of a dictionary given its filename"""
-        try:
-            data = pkgutil.get_data('motus.dic', filename)
-            self.dico = yaml.safe_load(data.decode())
-        except FileNotFoundError:
-            raise
+        rd = dictools.Reader()
+        rd.config(filename, filetype, None, pckg)
+        self.dic = rd.parse()
 
     @abstractmethod
     def play(self):
@@ -32,10 +31,10 @@ class Game(ABC):
 
 
 class SoloGame(Game):
-    def __init__(self, dico_filename):
+    def __init__(self, filename, filetype=None, pckg=True):
         self.wins = 0
         self.rounds = 0
-        super().__init__(dico_filename)
+        super().__init__(filename, filetype, pckg)
 
     def incr_wins(self):
         self.wins = self.wins+1
@@ -66,7 +65,7 @@ class Round(ABC):
         pass
 
     def pick_solution(self):
-        all_words = self.game.dico[self.wordlength]
+        all_words = self.game.dic.content[self.wordlength]
 
         first_letter = random.choice(list(all_words))
         self.solution = random.choice(list(all_words[first_letter]))

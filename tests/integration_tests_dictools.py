@@ -1,8 +1,9 @@
-from motus.dic.wordset import NonAplhaWordWarning, SubFileException, WordSet
 import os
 import tempfile
 import unittest
 from warnings import catch_warnings
+
+from motus.dictools import NonAplhaWordWarning, SubFileException, Dic
 
 
 SAMPLE_DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)),
@@ -14,29 +15,29 @@ WORDLIST_FILE = os.path.join(SAMPLE_DATA_PATH, 'wordlist.txt')
 # WORDLIST_BROKEN_FILE = os.path.join(SAMPLE_DATA_PATH, 'wordlist_broken.txt')
 
 
-class DicWordSetTest(unittest.TestCase):
+class DicDicTest(unittest.TestCase):
     def test_constructor(self):
-        w1 = WordSet()
-        w2 = WordSet(WORDLIST_FILE)
-        w3 = WordSet(WORDLIST_FILE, SUBSTITUTION_FILE)
-        w4 = WordSet(substitution_file=SUBSTITUTION_FILE)
+        w1 = Dic()
+        w2 = Dic(WORDLIST_FILE)
+        w3 = Dic(WORDLIST_FILE, SUBSTITUTION_FILE)
+        w4 = Dic(substitution_file=SUBSTITUTION_FILE)
 
-        self.assertIsInstance(w1, WordSet)
+        self.assertIsInstance(w1, Dic)
         self.assertSetEqual(w1._content, set())
         self.assertDictEqual(w1._substitutions, {})
 
-        self.assertIsInstance(w2, WordSet)
+        self.assertIsInstance(w2, Dic)
         self.assertSetEqual(w2._content, {'BOAT', 'TRUCK', 'DOLPHIN'})
         self.assertDictEqual(w2._substitutions, {})
 
-        self.assertIsInstance(w3, WordSet)
+        self.assertIsInstance(w3, Dic)
         self.assertSetEqual(w3._content, {'BEAT', 'TRICK', 'DELPHINE'})
         self.assertDictEqual(
             w3._substitutions,
             {'O': 'E', 'U': 'I', 'N': 'NE'},
         )
 
-        self.assertIsInstance(w4, WordSet)
+        self.assertIsInstance(w4, Dic)
         self.assertSetEqual(w4._content, set())
         self.assertDictEqual(
             w4._substitutions,
@@ -44,11 +45,11 @@ class DicWordSetTest(unittest.TestCase):
         )
 
     def test_add_substitution(self):
-        w1 = WordSet()
+        w1 = Dic()
         w1.add_substitution('$', 's')
         w1.add_substitution('o', 'I')
 
-        w2 = WordSet(substitution_file=SUBSTITUTION_FILE)
+        w2 = Dic(substitution_file=SUBSTITUTION_FILE)
         w2.add_substitution('$', 's')
         w2.add_substitution('o', 'I')
 
@@ -59,9 +60,9 @@ class DicWordSetTest(unittest.TestCase):
         )
 
     def test_read_substitutions(self):
-        w1 = WordSet(substitution_file=SUBSTITUTION_FILE)
-        w2 = WordSet()
-        w3 = WordSet()
+        w1 = Dic(substitution_file=SUBSTITUTION_FILE)
+        w2 = Dic()
+        w3 = Dic()
 
         w1.read_substitutions(SUBSTITUTION_FILE)
         self.assertDictEqual(
@@ -79,10 +80,10 @@ class DicWordSetTest(unittest.TestCase):
             w3.read_substitutions(SUBSTITUTION_BROKEN_FILE)
 
     def test_add_word(self):
-        w1 = WordSet()
-        w2 = WordSet()
-        w3 = WordSet()
-        w4 = WordSet()
+        w1 = Dic()
+        w2 = Dic()
+        w3 = Dic()
+        w4 = Dic()
         self.assertSetEqual(w1._content, set())
         self.assertSetEqual(w2._content, set())
         self.assertSetEqual(w3._content, set())
@@ -111,9 +112,9 @@ class DicWordSetTest(unittest.TestCase):
 WRITE_DATA = {'SET', 'IN', 'NO', 'PARTICULAR', 'ORDER'}
 
 
-class TestWordSetWrite(unittest.TestCase):
+class TestDicWrite(unittest.TestCase):
     def setUp(self):
-        self.w = WordSet()
+        self.w = Dic()
         self.w._content = WRITE_DATA
 
         tmp_handler, tmp_path = tempfile.mkstemp()
@@ -127,7 +128,7 @@ class TestWordSetWrite(unittest.TestCase):
         os.close(self.tmp_handler)
 
 
-class TestWordSetWriteList(TestWordSetWrite):
+class TestDicWriteList(TestDicWrite):
     def test_write_list(self):
         self.w.write_list(self.tmp_path)
         self.assertListEqual(
@@ -137,7 +138,7 @@ class TestWordSetWriteList(TestWordSetWrite):
         )
 
 
-class TestWordSetWriteDict(TestWordSetWrite):
+class TestDicWriteDict(TestDicWrite):
     def test_write_dict(self):
         self.w.write_dict(self.tmp_path)
         self.assertListEqual(

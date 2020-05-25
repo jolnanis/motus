@@ -1,4 +1,4 @@
-# Substitution file for motus.generate_dict.WordSet
+# Substitution file for motus.generate_dict.Dic
 # One line per Substitution, use capital letters.
 # Syntax: OLD_EXPR[SPACE]NEW_EXPR
 # Blank lines are ignored.
