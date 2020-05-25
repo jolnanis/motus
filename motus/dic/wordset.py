@@ -1,4 +1,5 @@
 import warnings
+
 import yaml
 
 
@@ -48,12 +49,11 @@ class WordSet:
 
     def add(self, word):
         """Cleans a word and adds it to the WordSet"""
-        word = word.strip()
-        word = word.upper()
+        word = word.strip().upper()
         for old, new in self._substitutions.items():
             word = word.replace(old, new)
 
-        if (word.isascii() and word.isalpha()):
+        if (ord(min(word)) > 64 and ord(max(word)) < 90):
             self._content.add(word)
         else:
             warnings.warn(NonAplhaWordWarning(
