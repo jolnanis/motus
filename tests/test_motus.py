@@ -22,7 +22,8 @@ class GameTestInstanciation(unittest.TestCase):
 
 class SoloGameTestBasic(unittest.TestCase):
     def setUp(self):
-        self.sg = SoloGame('example')
+        with mock.patch('motus.motus.Game.load_dic'):
+            self.sg = SoloGame('example', 'application/x-yaml', False)
 
 
 class SoloGameTestIncr(SoloGameTestBasic):
