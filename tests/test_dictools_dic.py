@@ -45,7 +45,6 @@ class DictoolsTestNewDic(unittest.TestCase):
 
             init.assert_called_once_with()
 
-
     def _test_new_dic_through_reader(self, *args, **kwargs):
         expected = kwargs.pop('expected')
         with mock.patch('motus.dictools.Reader') as rd:
@@ -68,7 +67,7 @@ class DictoolsTestNewDic(unittest.TestCase):
         self._test_new_dic_through_reader(
             'example.yml',
             dic_path='example.yml',
-            expected= [
+            expected=[
                 mock.call(),
                 mock.call().config('example.yml', dic_path='example.yml')
             ]

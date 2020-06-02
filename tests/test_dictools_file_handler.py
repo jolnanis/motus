@@ -359,7 +359,7 @@ class DictoolsTestReaderParse(DictoolsTestReaderBasic):
             self.rd.parse()
             mock_get.assert_called_once_with('text/plain')
 
-    def test_parse_working(self):
+    def test_parse_working_2(self):
         self.rd.dic_path = 'example.yml'
         with mock.patch('motus.dictools.Reader._get_parser') as mock_get:
             self.rd.parse()
@@ -384,7 +384,7 @@ class DictoolsTestReader_GetParser(DictoolsTestReaderBasic):
             self.rd._get_parser('application/json')
 
 
-# Not really unit tests but the parser involves too many method calls 
+# Not really unit tests but the parser involves too many method calls
 # for unit testing to be convenient.
 class DictoolsTestReader_TxtParser(DictoolsTestReaderBasic):
     def _test__txt_parser(self, file, expected):
@@ -392,7 +392,7 @@ class DictoolsTestReader_TxtParser(DictoolsTestReaderBasic):
             mock_open.return_value = file
             d = self.rd._txt_parser('example.path')
             self.assertEqual(d.content, expected)
-    
+
     def _test__yaml_parser(self, file, expected):
         with mock.patch('builtins.open') as mock_open:
             mock_open.return_value = file
@@ -488,7 +488,6 @@ class DictoolsTestReaderClean(DictoolsTestReaderBasic):
 
         with self.assertRaises(dictools.NonAplhaWordException):
             self._test_clean({'Ö': 'O'}, 'àpricoté \n', 'APRICOT')
-
 
 
 class DictoolsTestWriterInstanciation(unittest.TestCase):
@@ -610,7 +609,7 @@ class DictoolsTestWriterParse(DictoolsTestWriterBasic):
             self.wt.write(self.dic)
             mock_get.assert_called_once_with('text/plain')
 
-    def test_write_working(self):
+    def test_write_working_2(self):
         self.wt.dic_path = 'example.yml'
         with mock.patch('motus.dictools.Writer._get_writer') as mock_get:
             self.wt.write(self.dic)

@@ -1,11 +1,8 @@
 from abc import ABC, abstractmethod
 from collections import Counter
-import pkgutil
 import random
 
-import yaml
-
-from  motus import dictools
+from motus import dictools
 from motus.ui import UI
 
 
@@ -75,7 +72,7 @@ class Round(ABC):
 
         The boolean is `True` if the guessed word is the solution
 
-        The correction string is the same length as the solution and contains:\n
+        For each letter:\n
         `R` Right : Good letter in the good place.\n
         `M` Misplaced : Good letter in a bad place.\n
         `W` Wrong : Letter used too many times"""

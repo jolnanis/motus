@@ -1,8 +1,7 @@
 import unittest
 from unittest import mock
 
-from motus import motus
-from motus.motus import Game, SoloGame, Round, SoloRound
+from motus.motus import SoloGame,  SoloRound
 
 
 class SoloGameTestInstanciation(unittest.TestCase):
@@ -17,14 +16,13 @@ class SoloGameTestInstanciation(unittest.TestCase):
 class GameTestInstanciation(unittest.TestCase):
     def test_init(self):
         with mock.patch('motus.motus.Game.load_dic') as mock_load:
-            sg = SoloGame('example')
+            SoloGame('example')
             mock_load.assert_called_once_with('example', None, True)
 
 
 class SoloGameTestBasic(unittest.TestCase):
     def setUp(self):
-        with mock.patch('motus.motus.Game.__init__') as mock_super:
-            self.sg = SoloGame('example')
+        self.sg = SoloGame('example')
 
 
 class SoloGameTestIncr(SoloGameTestBasic):
@@ -43,17 +41,17 @@ class SoloGameTestIncr(SoloGameTestBasic):
         self.assertEqual(self.sg.rounds, expected[1])
 
     def test_incr_wins(self):
-        self._test_incr_wins([0,0], [1,0])
-        self._test_incr_wins([12,13], [13,13])
+        self._test_incr_wins([0, 0], [1, 0])
+        self._test_incr_wins([12, 13], [13, 13])
 
     def test_incr_rounds(self):
-        self._test_incr_rounds([0,0], [0,1])
-        self._test_incr_rounds([12,13], [12,14])
+        self._test_incr_rounds([0, 0], [0, 1])
+        self._test_incr_rounds([12, 13], [12, 14])
 
 
 class SoloRoundTestBasic(SoloGameTestBasic):
     def setUp(self):
-        with mock.patch('motus.motus.Game.__init__') as mock_super:
+        with mock.patch('motus.motus.Game.__init__'):
             self.sg = SoloGame('example')
 
 

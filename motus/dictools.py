@@ -5,7 +5,6 @@ import pkgutil
 
 import yaml
 
-import motus
 
 class FileHandlingException(Exception):
     """Exception raised during opening a dic file for Read/Write operations"""
@@ -17,6 +16,7 @@ class ParsingException(FileHandlingException):
 
 class NonAplhaWordException(ParsingException):
     """Raised when a word is not composed of A-Z letters"""
+
 
 class ConfigFileException(Exception):
     """Exception raised when Substitution file is poorly formed"""
@@ -98,7 +98,7 @@ class Dic:
                     return {word[0]: [word], container[0][0]: container}
             else:
                 return {
-                    len(word): {word[0]: [word]}, 
+                    len(word): {word[0]: [word]},
                     len(container[0]): {container[0][0]: container},
                 }
         elif state == 'various-initials dict':
@@ -112,7 +112,7 @@ class Dic:
                     return container
             else:
                 return {
-                    len(word): {word[0]: [word]}, 
+                    len(word): {word[0]: [word]},
                     len(one_word): container
                 }
         elif state == 'various-lengths dict':
@@ -127,7 +127,6 @@ class Dic:
                 container[len(word)] = {word[0]: [word]}
                 return container
 
-
     def insert(self, word):
         if word is None:
             return
@@ -137,7 +136,6 @@ class Dic:
             err_str = ('Problem when adding an entry to the dic. '
                        'Internal state corrupted')
             raise DicStateException(err_str)
-            
 
 
 class FileHandler(ABC):
@@ -226,8 +224,8 @@ class Reader(FileHandler):
             raise FileHandlingException(f'Could not infer a file type for'
                                         f'{self.file_path}')
 
-        if ((self.filetype and self.inferred_filetype) is not None 
-            and self.filetype != self.inferred_filetype):
+        if ((self.filetype and self.inferred_filetype) is not None
+                and self.filetype != self.inferred_filetype):
             err_str = (f'Incompatible filetypes: {self.filetype}, '
                        f'{self.inferred_filetype}')
             raise FileHandlingException(err_str)
@@ -309,8 +307,8 @@ class Writer(FileHandler):
             raise FileHandlingException(f'Could not infer a file type for'
                                         f'{self.dic_path}')
 
-        if ((self.filetype and self.inferred_filetype) is not None 
-            and self.filetype != self.inferred_filetype):
+        if ((self.filetype and self.inferred_filetype) is not None
+                and self.filetype != self.inferred_filetype):
             err_str = (f'Incompatible filetypes: {self.filetype}, '
                        f'{self.inferred_filetype}')
             raise FileHandlingException(err_str)
