@@ -367,17 +367,19 @@ class DictoolsTestReaderParse(DictoolsTestReaderBasic):
 
 
 class DictoolsTestReader_GetParser(DictoolsTestReaderBasic):
+    def setUp(self):
+        super().setUp()
+        self.rd.dic_path = "example"
+
     def test__get_parser_txt(self):
-        self.assertEqual(
+        with mock.patch('motus.dictools.Reader._txt_parser') as mock_txt:
             self.rd._get_parser('text/plain'),
-            self.rd._txt_parser
-        )
+            mock_txt.assert_called_once_with(self.rd.dic_path)
 
     def test__get_parser_yaml(self):
-        self.assertEqual(
+        with mock.patch('motus.dictools.Reader._yaml_parser') as mock_yml:
             self.rd._get_parser('application/x-yaml'),
-            self.rd._yaml_parser
-        )
+            mock_yml.assert_called_once_with(self.rd.dic_path)
 
     def test__get_parser_error(self):
         with self.assertRaises(dictools.FileHandlingException):
