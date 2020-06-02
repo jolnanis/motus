@@ -1,5 +1,4 @@
 [run]
 branch = true
 include = motus/*
-omit =
-  tests/*
+omit = tests/*
