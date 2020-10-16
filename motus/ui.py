@@ -46,10 +46,10 @@ class UI:
         print(f'Congratulations, {solution} was the right answer !')
 
     @classmethod
-    def display_correction(cls, guess, correction):
+    def display_correction(cls, guess, hints):
         adjusted_guess = guess.ljust(cls.wordlength, '-')[:cls.wordlength]
 
-        for letter, hint in zip(adjusted_guess, correction):
+        for letter, hint in zip(adjusted_guess, hints):
             cls._display_letter(letter, hint)
         print()
 

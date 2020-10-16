@@ -68,11 +68,11 @@ class Round(ABC):
         self.solution = random.choice(list(all_words[first_letter]))
 
     def evaluate(self, guess):
-        """ Returns a tuple of a boolean and a correction string.
+        """ Returns a tuple of a boolean and a hint string.
 
         The boolean is `True` if the guessed word is the solution
 
-        For each letter:\n
+        Hint string encoding, for each letter:\n
         `R` Right : Good letter in the good place.\n
         `M` Misplaced : Good letter in a bad place.\n
         `W` Wrong : Letter used too many times"""
@@ -85,21 +85,21 @@ class Round(ABC):
         if guess == solution:
             return True, 'R' * self.wordlength
 
-        correction = ''
+        hints = ''
         for correct_letter, guessed_letter in zip(solution, guess):
 
             if correct_letter == guessed_letter:
-                correction = correction + 'R'
+                hints = hints + 'R'
                 letters[correct_letter] = letters[correct_letter] - 1
 
             elif guessed_letter in list(letters) and letters[guessed_letter] > 0:
-                correction = correction + 'M'
+                hints = hints + 'M'
                 letters[guessed_letter] = letters[guessed_letter] - 1
 
             else:
-                correction = correction + 'W'
+                hints = hints + 'W'
 
-        return False, correction
+        return False, hints
 
 
 class SoloRound(Round):
@@ -112,8 +112,8 @@ class SoloRound(Round):
         for i in range(DEFAULT_GUESSES):
             guess = UI.prompt_guess()
 
-            res, correction = self.evaluate(guess)
-            UI.display_correction(guess, correction)
+            res, hints = self.evaluate(guess)
+            UI.display_correction(guess, hints)
 
             if res:
                 self.game.incr_wins()
