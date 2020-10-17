@@ -68,38 +68,7 @@ class Round(ABC):
         self.solution = random.choice(list(all_words[first_letter]))
 
     def evaluate(self, guess):
-        """ Returns a tuple of a boolean and a hint string.
-
-        The boolean is `True` if the guessed word is the solution
-
-        Hint string encoding, for each letter:\n
-        `R` Right : Good letter in the good place.\n
-        `M` Misplaced : Good letter in a bad place.\n
-        `W` Wrong : Letter used too many times"""
-        if len(guess) != self.wordlength:
-            return False, 'W' * self.wordlength
-
-        solution = self.solution
-        letters = Counter(solution)
-
-        if guess == solution:
-            return True, 'R' * self.wordlength
-
-        hints = ''
-        for correct_letter, guessed_letter in zip(solution, guess):
-
-            if correct_letter == guessed_letter:
-                hints = hints + 'R'
-                letters[correct_letter] = letters[correct_letter] - 1
-
-            elif guessed_letter in list(letters) and letters[guessed_letter] > 0:
-                hints = hints + 'M'
-                letters[guessed_letter] = letters[guessed_letter] - 1
-
-            else:
-                hints = hints + 'W'
-
-        return False, hints
+        return evaluate(self.solution, guess)
 
 
 class SoloRound(Round):
@@ -122,6 +91,52 @@ class SoloRound(Round):
 
         if not res:
             UI.display_solution(self.solution)
+
+
+def evaluate(solution, guess):
+    """ Returns a tuple of a boolean and a hint string.
+
+    The boolean is `True` iff the guessed word is the solution
+
+    Hint string encoding, for each letter:\n
+    `R` Right : Good letter in the good place.\n
+    `M` Misplaced : Good letter in a bad place.\n
+    `W` Wrong : Letter used too many times"""
+    wordlength = len(solution)
+
+    # Obvious cases handling :
+    if len(guess) != wordlength or guess[0] != solution[0]:
+        return False, 'W' * wordlength
+
+    if guess == solution:
+        return True, 'R' * wordlength
+
+    # Other cases, initialize with "all wrong" hint list
+    hints = ['W'] * wordlength
+
+    # First pass: fill-up right guesses
+    letters = Counter(solution)
+    for i in range(len(solution)):
+        right_letter = solution[i]
+        guessed_letter = guess[i]
+        if guessed_letter == right_letter:
+            hints[i] = 'R'
+            letters[guessed_letter] = letters[guessed_letter] - 1
+
+    # Second pass: fill-up misplaced guesses
+    for i in range(len(solution)):
+        right_letter = solution[i]
+        guessed_letter = guess[i]
+
+        if hints[i] == 'R':
+            continue
+
+        if guessed_letter in list(letters) and letters[guessed_letter] > 0:
+            hints[i] = 'M'
+            letters[guessed_letter] = letters[guessed_letter] - 1
+
+    hints = ''.join(hints)  # Convert hint list to hint string
+    return False, hints
 
 
 def main():

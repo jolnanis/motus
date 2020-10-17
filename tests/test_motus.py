@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-from motus.motus import SoloGame,  SoloRound
+from motus.motus import SoloGame, SoloRound, evaluate
 
 
 class SoloGameTestInstanciation(unittest.TestCase):
@@ -62,6 +62,31 @@ class SoloRoundTestInstanciation(SoloRoundTestBasic):
             rd = SoloRound(self.sg, 8)
             pick_mock.assert_called_once_with()
             self.assertEqual(rd.wordlength, 8)
+
+
+class TestEvaluation(unittest.TestCase):
+    def _test_evaluation(self, solution, guess, right_ans, right_hint):
+        ans, hint = evaluate(solution, guess)
+        self.assertEqual(ans, right_ans)
+        self.assertEqual(hint, right_hint)
+
+    def test_correct(self):
+        self._test_evaluation('BANANA', 'BANANA', True, 'RRRRRR')
+
+    def test_incorrect_1(self):
+        self._test_evaluation('BANANA', 'BOUNTY', False, 'RWWMWW')
+
+    def test_incorrect_2(self):
+        self._test_evaluation('BANANA', 'BNANNA', False, 'RMMWRR')
+
+    def test_wrong_length(self):
+        self._test_evaluation('BANANA', 'BONANZA', False, 'WWWWWW')
+
+    def test_wrong_initial(self):
+        self._test_evaluation('BANANA', 'APPLES', False, 'WWWWWW')
+
+    def test_wrong_length_and_initial(self):
+        self._test_evaluation('BANANA', 'PINEAPPLE', False, 'WWWWWW')
 
 
 if __name__ == '__main__':
