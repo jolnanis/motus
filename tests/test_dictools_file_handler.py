@@ -728,7 +728,7 @@ class TestDictoolsWriterWriteTxt(TestDictoolsWriterWrite):
     def test_write_txt_full_dic(self):
         self._test_write_txt(
             'text/plain',
-            FULL_DIC, 
+            FULL_DIC,
             FULL_DIC_TXT
         )
 
