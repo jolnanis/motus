@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from collections import Counter
 import random
 
-from motus import dictools
+from motus import dictools, player
 from motus.ui import UI
 
 
@@ -31,6 +31,7 @@ class SoloGame(Game):
     def __init__(self, filename, filetype=None, pckg=True):
         self.wins = 0
         self.rounds = 0
+        self.player = player.HumanPlayer()
         super().__init__(filename, filetype, pckg)
 
     def incr_wins(self):
@@ -79,7 +80,7 @@ class SoloRound(Round):
         UI.display_first_word(self.solution[0])
 
         for i in range(DEFAULT_GUESSES):
-            guess = UI.prompt_guess()
+            guess = self.game.player.guess()
 
             res, hints = self.evaluate(guess)
             UI.display_correction(guess, hints)
